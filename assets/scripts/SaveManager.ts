@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Label, Prefab, instantiate, EditBox, director, Button, Color, Sprite } from 'cc';
+﻿import { _decorator, Component, Node, Label, Prefab, instantiate, EditBox, director, Button, Color, Sprite } from 'cc';
 import { NetManager } from './NetManager';
 const { ccclass, property } = _decorator;
 
@@ -16,13 +16,15 @@ export class SaveManager extends Component {
     private selectedPlayerId: string = ""; // 当前选中的存档ID
     private currentSavesCount: number = 0;
 
+    @property(Button) deleteBtn: Button = null; 
+
     start() {
         this.createPanel.active = false;
         this.confirmBtn.interactable = false;
         this.refreshSaveList();
     }
 
-    // 获取并刷新存档列表
+    // 刷新列表逻辑微调：如果没有存档了，禁用按钮
     async refreshSaveList() {
         try {
             this.tipsLabel.string = "正在加载存档...";
@@ -30,7 +32,14 @@ export class SaveManager extends Component {
             
             this.currentSavesCount = saves.length;
             this.renderSaves(saves);
+            
             this.tipsLabel.string = `已有存档: ${this.currentSavesCount}/6`;
+            
+            // 刷新后如果没有选中目标，确保按钮是灰的
+            if (!this.selectedPlayerId) {
+                this.confirmBtn.interactable = false;
+                this.deleteBtn.interactable = false;
+            }
         } catch (err) {
             this.tipsLabel.string = "加载失败";
         }
@@ -83,12 +92,15 @@ export class SaveManager extends Component {
     onSelectSave(playerId: string, itemNode: Node) {
         this.selectedPlayerId = playerId;
         this.confirmBtn.interactable = true;
+        this.deleteBtn.interactable = true; // 点亮删除按钮
         
-        // 简单的视觉反馈：高亮选中的节点 (需根据你的预制体调整)
+        // 高亮视觉反馈
         this.saveListLayout.children.forEach(child => {
-            child.getComponent(Sprite).color = Color.WHITE;
+            const sprite = child.getComponent(Sprite);
+            if (sprite) sprite.color = Color.WHITE;
         });
-        itemNode.getComponent(Sprite).color = Color.YELLOW; 
+        const selectedSprite = itemNode.getComponent(Sprite);
+        if (selectedSprite) selectedSprite.color = Color.YELLOW; 
     }
 
     // 打开新建面板
@@ -122,11 +134,50 @@ export class SaveManager extends Component {
         localStorage.setItem("current_player_id", this.selectedPlayerId);
         
         this.tipsLabel.string = "正在进入医馆...";
-        director.loadScene("MainGameScene"); // 进入主游戏场景
+        this.scheduleOnce(() => {
+            director.loadScene("MainGameScene", () => {
+                console.log("主场景加载回调成功执行");
+            });
+        }, 0); 
     }
 
     onCloseCreatePanel() {
     this.createPanel.active = false;
     this.nicknameInput.string = "";
+    }
+
+    async onDeleteSelectedSave() {
+        if (!this.selectedPlayerId) return;
+
+        // 建议增加一个简单的二次确认（原生弹窗）
+        // 如果之后你有漂亮的 UI 弹窗，可以替换掉这个
+        const confirm = window.confirm("确定要永久删除这个存档吗？此操作不可撤销。");
+        if (!confirm) return;
+
+        this.tipsLabel.string = "正在删除...";
+        this.deleteBtn.interactable = false; // 防止重复点击
+
+        try {
+            await NetManager.getInstance().post("/player/delete-save", { 
+                playerId: this.selectedPlayerId 
+            });
+            
+            this.tipsLabel.string = "存档已删除";
+            
+            // 关键：删除后重置选中状态
+            this.selectedPlayerId = "";
+            this.confirmBtn.interactable = false;
+            this.deleteBtn.interactable = false;
+
+            // 刷新列表
+            await this.refreshSaveList(); 
+            
+        } catch (err) {
+            console.error("删除失败:", err);
+            this.tipsLabel.string = "删除失败: " + (err.message || "未知错误");
+            this.deleteBtn.interactable = true;
+        }
+    }
+
 }
-}
+
