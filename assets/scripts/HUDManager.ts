@@ -1,107 +1,102 @@
-import { _decorator, Component, Node, Prefab, instantiate, Label, UITransform, Layout, Color } from 'cc';
+import { _decorator, Component, Label, director, Node, Vec3 } from 'cc';
+import { NetManager } from './NetManager';
 const { ccclass, property } = _decorator;
+import { GlobalData } from './GlobalData';
 
-/**
- * HUD 管理器：负责背包界面的刷新与查表显示
- */
 @ccclass('HUDManager')
 export class HUDManager extends Component {
+    // --- UI 文本引用 ---
+    @property(Label) nameLabel: Label = null;
+    @property(Label) goldLabel: Label = null;
+    @property(Label) levelLabel: Label = null;
+    @property(Label) reputationLabel: Label = null;
+    @property(Label) locationLabel: Label = null; // 位置与坐标显示
 
-    @property(Node)
-    bagPanel: Node = null; // 背包主面板
+    // --- 地图 ID 对应中文名映射 ---
+    private readonly MAP_NAMES: Record<string, string> = {
+        "clinic_interior": "医馆内堂",
+        "village_entrance": "杏花村口",
+        "back_mountain": "后山药林",
+        "market_street": "集市街口"
+    };
 
-    @property(Node)
-    bagContent: Node = null; // ScrollView 的 Content 节点
+    private playerId: string = "";
+    backpackPanel: any;
 
-    @property(Prefab)
-    itemPrefab: Prefab = null; // 物品条目预制体
-
-    // 模拟玩家存档数据（itemId 需与 JSON 中的对应）
-    private playerInventory = [
-        { itemId: "herb_gancao", count: 5 },
-        { itemId: "herb_mahuang", count: 2 },
-        { itemId: "herb_renshen", count: 1 },
-        { itemId: "seed_gancao", count: 10 },
-        { itemId: "mystery_seed", count: 1 }
-    ];
-
-    // 假设这是从服务器/本地加载进来的物品配置表
-    private itemListConfig = [];
-
-    start() {
-        if (this.bagPanel) this.bagPanel.active = false;
-
-        // 1. 获取 SaveManager 中的配置表数据
-        // 注意：这里需要根据你的项目实际单例写法来获取，假设叫 SaveManager.instance.itemList
-        // 这里暂时模拟赋值为你提供的 JSON 数据
-        this.itemListConfig = [
-            { "itemId": "herb_gancao", "name": "甘草" },
-            { "itemId": "herb_mahuang", "name": "麻黄" },
-            { "itemId": "herb_renshen", "name": "人参" },
-            { "itemId": "seed_gancao", "name": "甘草种子" },
-            { "itemId": "mystery_seed", "name": "神秘种子" }
-        ];
-
-        this.fixUIStructure();
+    onLoad() {
+        this.playerId = localStorage.getItem("current_player_id");
+        if (!this.playerId) {
+            director.loadScene("SelectSave");
+            return;
+        }
+        this.setLoadingState();
+        if (this.backpackPanel) {
+        this.backpackPanel.active = false;
+    }
     }
 
-    /**
-     * 自动修复 UI 布局，解决高度不增长和滑动条失效
-     */
-    private fixUIStructure() {
-        if (!this.bagContent) return;
-
-        const uiTrans = this.bagContent.getComponent(UITransform);
-        if (uiTrans) uiTrans.setAnchorPoint(0.5, 1); // 顶部对齐
-
-        let layout = this.bagContent.getComponent(Layout);
-        if (!layout) layout = this.bagContent.addComponent(Layout);
-
-        layout.type = Layout.Type.VERTICAL;
-        layout.resizeMode = Layout.ResizeMode.CONTAINER; // 自动撑开高度
-        layout.spacingY = 15;
-    }
-
-    public toggleBag() {
-        if (!this.bagPanel) return;
-        this.bagPanel.active = !this.bagPanel.active;
-
-        if (this.bagPanel.active) {
-            this.refreshBagUI();
+    async initGameConfig() {
+        try {
+            // 假设你有一个获取所有物品配置的接口 GET /item
+            const items = await NetManager.getInstance().get("/item");
+            GlobalData.itemConfigs = items;
+        } catch (err) {
+            console.error("加载物品配置失败");
         }
     }
 
+    async start() {
+    await this.initGameConfig(); // 1. 先拉取物品表
+    await this.refreshPlayerData(); // 2. 再拉取玩家数据
+    }
+
+    private setLoadingState() {
+        this.nameLabel.string = "载入中...";
+        this.goldLabel.string = "---";
+        this.locationLabel.string = "正在定位...";
+    }
+
     /**
-     * 刷新背包：增加“查表获取中文名”逻辑
+     * 拉取数据并同步
      */
-    public refreshBagUI() {
-        if (!this.bagContent || !this.itemPrefab) return;
+    async refreshPlayerData() {
+        const data = await NetManager.getInstance().get(`/player/${this.playerId}`);
+        GlobalData.playerData = data; // 存入全局
+        this.updateUI(data);
+    }
 
-        this.bagContent.removeAllChildren();
+    /**
+     * 核心：更新 UI 文字（包含地图与坐标）
+     */
+    private updateUI(data: any) {
+        this.nameLabel.string = data.nickname;
+        this.goldLabel.string = `金币: ${data.gold}`;
+        this.levelLabel.string = `等级: ${data.level}`;
+        this.reputationLabel.string = `声望: ${data.reputation}`;
 
-        this.playerInventory.forEach(invData => {
-            const node = instantiate(this.itemPrefab);
-            node.parent = this.bagContent;
+        // 格式化位置与坐标
+        const pos = data.lastPosition;
+        const mapId = pos?.mapId || "clinic_interior";
+        const mapName = this.MAP_NAMES[mapId] || mapId;
+        
+        // 取整处理坐标，防止出现 0.000001 这种长小数
+        const posX = Math.floor(pos?.x || 0);
+        const posY = Math.floor(pos?.y || 0);
 
-            // 【核心修复】在配置表中根据 ID 查找名字
-            const itemInfo = this.itemListConfig.find(config => config.itemId === invData.itemId);
+        // 显示效果：医馆内堂 (X: 0, Y: 0)
+        this.locationLabel.string = `${mapName} (X: ${posX}, Y: ${posY})`;
+    }
 
-            const nameLabel = node.getChildByName("ItemName")?.getComponent(Label);
-            const countLabel = node.getChildByName("CountLable")?.getComponent(Label);
-
-            if (nameLabel) {
-                // 如果查到了就显示“中文名”，查不到就显示“ID”兜底
-                nameLabel.string = itemInfo ? itemInfo.name : invData.itemId;
-                nameLabel.color = Color.WHITE; // 确保是白字
-            }
-
-            if (countLabel) {
-                countLabel.string = `x${invData.count}`;
-                countLabel.color = new Color(255, 235, 59); // 亮黄色
-            }
-        });
-
-        // 强制刷新，解决滑动条不及时出现的问题
-        this.bagContent.getComponent(Layout)?.updateLayout();
+    /**
+     * 同步物理位置
+     */
+    private syncWorldPosition(pos: any) {
+        if (!pos) return;
+        // 查找场景中名为 Player 的节点
+        const playerNode = director.getScene().getChildByPath("Canvas/Player");
+        if (playerNode) {
+            playerNode.setPosition(new Vec3(pos.x, pos.y, 0));
+            console.log(`[同步] 已将角色放置于坐标: ${pos.x}, ${pos.y}`);
+        }
     }
 }
