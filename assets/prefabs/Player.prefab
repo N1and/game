@@ -269,6 +269,9 @@
     "__prefab": {
       "__id__": 11
     },
+    "mainCamera": null,
+    "mapNode": null,
+    "gridSize": 64,
     "moveSpeed": 1,
     "syncInterval": 2,
     "_id": ""
