@@ -176,7 +176,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "57520716-48c8-4a19-8acf-41c9f8777fb0@f9941",
+      "__uuid__": "4784a8f3-ba8e-4cad-8556-5f870116fe77@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -1223,8 +1223,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 10.304,
-      "y": -105.508,
+      "x": 184.016,
+      "y": 109.521,
       "z": 0
     },
     "_lrot": {
@@ -1350,7 +1350,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "关闭背包",
+    "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
@@ -1423,7 +1423,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 60,
       "height": 40
     },
     "_anchorPoint": {
@@ -1460,7 +1460,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "6b90a5f8-16a3-4902-ac52-9a5676d591d2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -1530,19 +1530,19 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "6b90a5f8-16a3-4902-ac52-9a5676d591d2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "6b90a5f8-16a3-4902-ac52-9a5676d591d2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_pressedSprite": {
-      "__uuid__": "544e49d6-3f05-4fa8-9a9e-091f98fc2ce8@f9941",
+      "__uuid__": "0d0b9502-1cb2-4e9a-af2d-d3bdef3952bf@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_disabledSprite": {
-      "__uuid__": "951249e0-9f16-456d-8b85-a6ca954da16b@f9941",
+      "__uuid__": "8baacb7c-ceab-48b6-b627-cd4ec5be3eb6@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_duration": 0.1,
@@ -1736,7 +1736,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "关闭背包",
+    "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
@@ -1846,7 +1846,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "6b90a5f8-16a3-4902-ac52-9a5676d591d2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -1912,19 +1912,19 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "6b90a5f8-16a3-4902-ac52-9a5676d591d2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "6b90a5f8-16a3-4902-ac52-9a5676d591d2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_pressedSprite": {
-      "__uuid__": "544e49d6-3f05-4fa8-9a9e-091f98fc2ce8@f9941",
+      "__uuid__": "0d0b9502-1cb2-4e9a-af2d-d3bdef3952bf@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_disabledSprite": {
-      "__uuid__": "951249e0-9f16-456d-8b85-a6ca954da16b@f9941",
+      "__uuid__": "8baacb7c-ceab-48b6-b627-cd4ec5be3eb6@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_duration": 0.1,
@@ -2001,7 +2001,10 @@
       "b": 241,
       "a": 248
     },
-    "_spriteFrame": null,
+    "_spriteFrame": {
+      "__uuid__": "4784a8f3-ba8e-4cad-8556-5f870116fe77@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_type": 0,
     "_fillType": 0,
     "_sizeMode": 0,
