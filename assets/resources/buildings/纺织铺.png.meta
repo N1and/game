@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "d20ea8cf-2798-4421-814f-d11cdfb04d9d",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "d20ea8cf-2798-4421-814f-d11cdfb04d9d@6c48a",
+      "displayName": "纺织铺",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "d20ea8cf-2798-4421-814f-d11cdfb04d9d",
+        "visible": false
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "d20ea8cf-2798-4421-814f-d11cdfb04d9d@f9941",
+      "displayName": "纺织铺",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1.5,
+        "offsetY": -6,
+        "trimX": 47,
+        "trimY": 33,
+        "width": 463,
+        "height": 366,
+        "rawWidth": 560,
+        "rawHeight": 420,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -231.5,
+            -183,
+            0,
+            231.5,
+            -183,
+            0,
+            -231.5,
+            183,
+            0,
+            231.5,
+            183,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            47,
+            387,
+            510,
+            387,
+            47,
+            21,
+            510,
+            21
+          ],
+          "nuv": [
+            0.08392857142857142,
+            0.05,
+            0.9107142857142857,
+            0.05,
+            0.08392857142857142,
+            0.9214285714285714,
+            0.9107142857142857,
+            0.9214285714285714
+          ],
+          "minPos": [
+            -231.5,
+            -183,
+            0
+          ],
+          "maxPos": [
+            231.5,
+            183,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "d20ea8cf-2798-4421-814f-d11cdfb04d9d@6c48a",
+        "atlasUuid": "",
+        "trimType": "auto"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "fixAlphaTransparencyArtifacts": false,
+    "hasAlpha": true,
+    "redirect": "d20ea8cf-2798-4421-814f-d11cdfb04d9d@6c48a"
+  }
+}
