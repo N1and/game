@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "fbed84af-e686-42a6-bd73-b46939f25284",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "fbed84af-e686-42a6-bd73-b46939f25284@6c48a",
+      "displayName": "神秘商人",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "fbed84af-e686-42a6-bd73-b46939f25284",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "fbed84af-e686-42a6-bd73-b46939f25284@f9941",
+      "displayName": "神秘商人",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -16.5,
+        "offsetY": 5,
+        "trimX": 69,
+        "trimY": 38,
+        "width": 262,
+        "height": 491,
+        "rawWidth": 433,
+        "rawHeight": 577,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -131,
+            -245.5,
+            0,
+            131,
+            -245.5,
+            0,
+            -131,
+            245.5,
+            0,
+            131,
+            245.5,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            69,
+            539,
+            331,
+            539,
+            69,
+            48,
+            331,
+            48
+          ],
+          "nuv": [
+            0.15935334872979215,
+            0.0831889081455806,
+            0.7644341801385681,
+            0.0831889081455806,
+            0.15935334872979215,
+            0.9341421143847487,
+            0.7644341801385681,
+            0.9341421143847487
+          ],
+          "minPos": [
+            -131,
+            -245.5,
+            0
+          ],
+          "maxPos": [
+            131,
+            245.5,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "fbed84af-e686-42a6-bd73-b46939f25284@6c48a",
+        "atlasUuid": "",
+        "trimType": "auto"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "fixAlphaTransparencyArtifacts": false,
+    "hasAlpha": true,
+    "redirect": "fbed84af-e686-42a6-bd73-b46939f25284@6c48a"
+  }
+}
